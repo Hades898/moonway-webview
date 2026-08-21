@@ -901,6 +901,176 @@ body.index-open .top { visibility: hidden; }
 .ch-close .caption { margin-top: 3rem; color: var(--cream-45); }
 
 
+/* ——— archive collage: scattered tiles, interwoven display type, gentle drift ——— */
+.ch-collage {
+  position: relative;
+  background: var(--paper);
+  overflow: hidden;
+}
+
+.ch-collage .canvas { position: absolute; inset: 0; }
+
+.ch-collage figure {
+  position: absolute;
+  margin: 0;
+  cursor: zoom-in;
+  will-change: transform;
+}
+
+.ch-collage figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  box-shadow: 0 12px 34px rgba(23, 16, 10, 0.14);
+}
+
+.ch-collage .line {
+  position: absolute;
+  z-index: 2;
+  font-family: var(--serif);
+  font-weight: 640;
+  font-variation-settings: "opsz" 144;
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink-deep);
+  pointer-events: none;
+}
+
+.ch-collage .line em { font-style: italic; color: var(--ink-deep); }
+
+.ch-collage .eyebrow { position: absolute; z-index: 2; }
+
+.collage-mobile { display: none; }
+
+@media (max-width: 899px) {
+  .ch-collage .canvas { display: none; }
+  .ch-collage { overflow: visible; }
+  .collage-mobile { display: block; padding: 4.6rem 1.3rem 3.4rem; }
+  .collage-mobile .display { margin: 0.9rem 0 1.8rem; }
+  .collage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+  }
+  .collage-grid figure { cursor: zoom-in; }
+  .collage-grid img { width: 100%; height: 118px; object-fit: cover; border-radius: 2px; }
+}
+
+/* ——— six worlds: flip cards ——— */
+.ch-flip {
+  display: grid;
+  place-items: center;
+  background: var(--paper-2);
+}
+
+.ch-flip .inner { max-width: 78rem; width: 100%; padding: 5.6rem 2rem 4rem; }
+
+.ch-flip .display { margin: 1rem 0 2.2rem; }
+
+.flip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
+}
+
+.flip-card {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  perspective: 1200px;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  padding: 0;
+  text-align: left;
+}
+
+.flip-card .face {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 0.7s var(--ease-out);
+}
+
+.flip-card .front img { width: 100%; height: 100%; object-fit: cover; }
+
+.flip-card .front .chip {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.9rem;
+  font-family: var(--sans);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--cream);
+  background: rgba(23, 16, 10, 0.55);
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+
+.flip-card .back {
+  background: var(--ink-deep);
+  color: var(--cream);
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.2rem 1.3rem;
+}
+
+.flip-card .back .n {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-variation-settings: "opsz" 144;
+  font-size: 2.2rem;
+  color: var(--blush);
+  opacity: 0.5;
+}
+
+.flip-card .back h3 {
+  font-family: var(--serif);
+  font-weight: 620;
+  font-size: clamp(1.3rem, 1.8vw, 1.7rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.flip-card .back p { font-size: 0.85rem; color: var(--cream-70); margin-top: 0.35rem; }
+
+.flip-card .back .go {
+  font-family: var(--sans);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--blush);
+}
+
+@media (hover: hover) {
+  .flip-card:hover .front, .flip-card:focus-visible .front { transform: rotateY(180deg); }
+  .flip-card:hover .back, .flip-card:focus-visible .back { transform: rotateY(0); }
+}
+
+.flip-card.flipped .front { transform: rotateY(180deg); }
+.flip-card.flipped .back { transform: rotateY(0); }
+
+@media (max-width: 899px) {
+  .ch-flip .inner { padding: 4.6rem 1.3rem 3.4rem; }
+  .flip-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+  .flip-card { aspect-ratio: 1 / 1; }
+  .flip-card .back { padding: 0.9rem 1rem; }
+  .flip-card .back .n { font-size: 1.6rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-card .face { transition: none; }
+  .ch-collage figure { will-change: auto; }
+}
+
 /* ——— partner logo wall ——— */
 .logo-wall {
   display: grid;

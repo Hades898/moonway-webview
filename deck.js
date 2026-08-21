@@ -304,7 +304,7 @@
   }
 
   document.addEventListener("click", (e) => {
-    const fig = e.target.closest(".strip figure, .wall figure, .hero-object, .about-object, .svc-visual figure");
+    const fig = e.target.closest(".strip figure, .wall figure, .hero-object, .about-object, .svc-visual figure, .ch-collage figure, .collage-grid figure");
     if (fig) openLightbox(fig);
   });
   lb.addEventListener("click", (e) => {
@@ -319,6 +319,44 @@
       if (e.key === "Escape" || e.key === " ") closeLightbox();
     }
   }, true);
+
+  /* archive collage: gentle scroll drift (desktop, motion allowed) */
+  const collage = document.querySelector(".ch-collage");
+  if (collage && !reduced && window.matchMedia("(min-width: 900px) and (pointer: fine)").matches) {
+    const tiles = Array.from(collage.querySelectorAll("figure[data-speed]"));
+    let ticking = false;
+    function drift() {
+      const r = collage.getBoundingClientRect();
+      const p = (window.innerHeight - r.top) / (window.innerHeight + r.height) - 0.5;
+      tiles.forEach((t) => {
+        const s = parseFloat(t.dataset.speed || "1");
+        t.style.transform = "translateY(" + (p * (s - 1) * 220).toFixed(1) + "px)";
+      });
+      ticking = false;
+    }
+    window.addEventListener("scroll", () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(drift); }
+    }, { passive: true });
+    drift();
+  }
+
+  /* six worlds: tap flips on touch, second tap (or the go link) jumps */
+  document.querySelectorAll(".flip-card").forEach((card) => {
+    card.addEventListener("click", (e) => {
+      const hoverable = window.matchMedia("(hover: hover)").matches;
+      if (!hoverable && !card.classList.contains("flipped")) {
+        e.preventDefault();
+        document.querySelectorAll(".flip-card.flipped").forEach((c) => { if (c !== card) c.classList.remove("flipped"); });
+        card.classList.add("flipped");
+        return;
+      }
+      const target = document.querySelector(card.dataset.target);
+      if (target) {
+        const i = chapters.indexOf(target);
+        if (i > -1) go(i);
+      }
+    });
+  });
 
   setCurrent(0);
 })();
