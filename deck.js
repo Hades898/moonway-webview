@@ -144,6 +144,7 @@
 
   /* index overlay: modal focus handling */
   let indexOpener = null;
+  let scrollLock = 0;
   const inertables = ["header.top", "nav.rail", "main", ".counter", ".kbd-hint"]
     .map((s) => document.querySelector(s))
     .filter(Boolean);
@@ -168,6 +169,10 @@
       indexOpener = document.activeElement;
       overlay.classList.add("open");
       document.body.classList.add("index-open");
+      scrollLock = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = -scrollLock + "px";
+      document.body.style.width = "100%";
       overlay.setAttribute("aria-hidden", "false");
       /* focus once the overlay is actually visible (styles applied), and only
          then inert the page — inert on the opener's ancestor would otherwise
@@ -182,6 +187,10 @@
     } else {
       inertables.forEach((el) => (el.inert = false));
       document.body.classList.remove("index-open");
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      window.scrollTo(0, scrollLock);
       if (indexOpener && indexOpener.focus) indexOpener.focus();
       overlay.classList.remove("open");
       overlay.setAttribute("aria-hidden", "true");
@@ -196,8 +205,12 @@
     b.addEventListener("click", () => toggleIndex(false))
   );
   if (overlay) {
+    let downY = null;
+    overlay.addEventListener("pointerdown", (e) => { downY = e.clientY; });
     overlay.addEventListener("click", (e) => {
-      if (e.target === overlay) toggleIndex(false);
+      const moved = downY !== null && Math.abs(e.clientY - downY) > 12;
+      downY = null;
+      if (e.target === overlay && !moved) toggleIndex(false);
     });
     overlay.querySelectorAll("a").forEach((a) =>
       a.addEventListener("click", () => toggleIndex(false))
@@ -357,6 +370,24 @@
       }
     });
   });
+
+  /* mobile masthead yields while scrolling down so photography gets the full frame */
+  if (window.matchMedia("(max-width: 899px)").matches) {
+    let lastY = window.scrollY, mTick = false;
+    window.addEventListener("scroll", () => {
+      if (mTick) return;
+      mTick = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (!document.body.classList.contains("index-open")) {
+          if (y > 240 && y > lastY + 6) document.body.classList.add("mast-away");
+          else if (y < lastY - 6 || y < 120) document.body.classList.remove("mast-away");
+        }
+        lastY = y;
+        mTick = false;
+      });
+    }, { passive: true });
+  }
 
   setCurrent(0);
 })();
