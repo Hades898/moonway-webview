@@ -5,10 +5,11 @@ Plain HTML/CSS/JS — no build step, no dependencies beyond Google Fonts.
 
 ## Files
 
-- `index.html` — the whole deck (23 chapters: cover, about, services, archive collage, 6 concept categories with 5 horizontal gallery walls, Holi, Casino, gala tent, private dining, made-by-hand, six-worlds flip-card navigator, partner logo wall, close)
+- `index.html` — the whole deck (32 chapters: cover, about, audience index, archive collage, then seasons and audiences — weddings, beach dinners, summer, daylight tables, clubhouses, December, Christmas market, Jungle Gym, Halloween, Holi, Casino, gala tent, Jetour expedition, milestones, brands, private dining, made by hand, the workshop, the convoy — with 8 horizontal gallery carousels, an eight-worlds flip-card navigator, the partner logo wall and the close)
 - `deck.css` — design system (bold editorial: ivory ground, espresso type, heavy Fraunces display + Creato Display sans, espresso statement chapters)
-- `deck.js` — keyboard navigation, chapter tracking, index overlay, Christmas-wall scroller
-- `img/` — optimized photography (AVIF with JPEG fallback, 3-size responsive ladders; a full scroll loads ~5.5 MB) + `img/partners/` monochrome logo tiles
+- `deck.js` — keyboard navigation, chapter tracking, index overlay, gallery carousels, tap-to-fullscreen lightbox, flip cards, auto-hiding mobile masthead
+- `check.py` — pre-push guard: fails if the page references an image that isn't on disk
+- `img/` — optimized photography (AVIF with JPEG fallback, 3-size responsive ladders; a full scroll loads ~7 MB) + `img/partners/` monochrome logo tiles
 - `fonts/` — Creato Display (SIL OFL) as woff2
 
 ## Hosting
