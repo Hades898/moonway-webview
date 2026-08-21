@@ -5,10 +5,11 @@ Plain HTML/CSS/JS — no build step, no dependencies beyond Google Fonts.
 
 ## Files
 
-- `index.html` — the whole deck (14 chapters)
-- `deck.css` — design system ("paper atelier": cream ground, espresso type, Fraunces + Work Sans)
+- `index.html` — the whole deck (23 chapters: cover, about, services, archive collage, 6 concept categories with 5 horizontal gallery walls, Holi, Casino, gala tent, private dining, made-by-hand, six-worlds flip-card navigator, partner logo wall, close)
+- `deck.css` — design system (bold editorial: ivory ground, espresso type, heavy Fraunces display + Creato Display sans, espresso statement chapters)
 - `deck.js` — keyboard navigation, chapter tracking, index overlay, Christmas-wall scroller
-- `img/` — optimized photography (AVIF with JPEG fallback, 3-size responsive ladders, ~9.4 MB AVIF total; a full scroll on a modern browser loads ~3–4 MB)
+- `img/` — optimized photography (AVIF with JPEG fallback, 3-size responsive ladders; a full scroll loads ~5.5 MB) + `img/partners/` monochrome logo tiles
+- `fonts/` — Creato Display (SIL OFL) as woff2
 
 ## Hosting
 
@@ -20,6 +21,8 @@ cd moonway-webview && python3 -m http.server 8000
 ```
 
 then open http://localhost:8000
+
+Live: https://hades898.github.io/moonway-webview/ (GitHub Pages from `main` — push to deploy)
 
 ## Presenting live (laptop / projector)
 
@@ -34,7 +37,7 @@ Every chapter has a URL anchor (`#weddings`, `#christmas`, `#clients` …) so yo
 deep-link a client to a specific section.
 
 On phones the deck becomes a free-scrolling page with layouts designed for small
-screens (no scroll hijacking).
+screens (no scroll hijacking). Tap any gallery photo to view it full screen; tap a Six Worlds card to flip it, tap again to jump.
 
 ## Updating content
 
